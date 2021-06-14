@@ -1,3 +1,4 @@
+"""Модуль ядра."""
 from sqlalchemy import Column, Integer, VARCHAR, TIMESTAMP, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from app.util.util import parse_datetime_tz
@@ -18,12 +19,13 @@ lg = log.getlogger('api')
 
 
 class UniCore:
-    """Класс для общих методов"""
+    """Класс для общих методов."""
+
     # Проверка типов переданных полей и полей объекта
     def check_obj(self, obj_dict):
         """
 
-        Функция проверки типов переданных полей и полей объекта
+        Функция проверки типов переданных полей и полей объекта.
 
         Args:
             obj_dict (dict): словарь полей объекта
@@ -55,7 +57,7 @@ class UniCore:
     def get_dict(self):
         """
 
-        Функция получения словаря из объекта
+        Функция получения словаря из объекта.
 
         Returns:
             dict: словарь атрибутов объекта
@@ -84,7 +86,7 @@ class UniCore:
     def update(self, obj_dict):
         """
 
-        Функция изменения полей объекта
+        Функция изменения полей объекта.
 
         Args:
             obj_dict (dict): словарь полей объекта
@@ -112,7 +114,7 @@ class UniCore:
     def delete(self):
         """
 
-        Функция удаления объекта
+        Функция удаления объекта.
 
         Returns:
             object: объект, иначе Exception
@@ -138,7 +140,7 @@ class UniCore:
     def set_date(self, attr_date, date=None):
         """
 
-        Функция установки даты полю объекта
+        Функция установки даты полю объекта.
 
         Args:
             attr_date (array): массив атрибутов-названий даты
@@ -166,7 +168,7 @@ class UniCore:
     def has_attr(self, name):
         """
 
-        Функция проверки на наличие поля name у объекта
+        Функция проверки на наличие поля name у объекта.
 
         Args:
             name (string): строка имени
@@ -184,7 +186,7 @@ class UniCore:
 
 
 class UniCores:
-    """Класс для общих множественных методов"""
+    """Класс для общих множественных методов."""
 
     @staticmethod
     def get_method_by_name(obj_class, name_method):
@@ -194,7 +196,7 @@ class UniCores:
     def add(obj_dict, obj_class, exc, mode_return=None):
         """
 
-        Функция добавления общая
+        Функция добавления общая.
 
         Args:
             obj_dict (dict): Словарь параметров для добавления
@@ -255,7 +257,7 @@ class UniCores:
     def update(obj_dict, obj_class, exc):
         """
 
-        Функция изменения общая
+        Функция изменения общая.
 
         Args:
             obj_dict (dict): Словарь параметров для изменения
@@ -299,7 +301,7 @@ class UniCores:
     def get(obj_dict, obj_class, exc, mode='not_deleted', mode_return=None):
         """
 
-               Функция получения объекта общая
+               Функция получения объекта общая.
 
                Args:
                    obj_dict (dict): Словарь с id объекта
@@ -356,7 +358,7 @@ class UniCores:
     def delete(obj_dict, obj_class, exc, mode=None, obj=None):
         """
 
-               Функция удаления объекта общая
+               Функция удаления объекта общая.
 
                Args:
                    obj_dict (dict): Словарь с id объекта
@@ -400,7 +402,7 @@ class UniCores:
     def delete_hard(obj, obj_class, exc):
         """
 
-               Функция "безвозвратного" удаления объекта общая
+               Функция "безвозвратного" удаления объекта общая.
 
                Args:
                    obj (object): Объект
@@ -433,7 +435,7 @@ class UniCores:
     def get_all(qf, filter, obj_class, exc, query=None):
         """
 
-            Функция получения списка общая
+            Функция получения списка общая.
 
             Args:
                 qf (dict): Словарь параметров для объекта фильтра
@@ -486,7 +488,7 @@ class UniCores:
     def set_date(obj_dict, attr_date, obj_class, exc, date=None, return_obj=False):
         """
 
-            Функция установки даты общая
+            Функция установки даты общая.
 
             Args:
                 obj_dict (dict): Словарь параметров для установки
@@ -531,7 +533,7 @@ class UniCores:
     def set_unset(obj_dict, attr_array, obj_class, exc):
         """
 
-            Функция установки связей в промежуточных таблицах общая
+            Функция установки связей в промежуточных таблицах общая.
 
             Args:
                 obj_dict (dict): Словарь параметров для установки
@@ -609,7 +611,7 @@ class UniCores:
     def get_id_from_obj_dict(obj_dict, obj_class):
         """
 
-            Функция получения id из obj_dict
+            Функция получения id из obj_dict.
 
             Args:
                 obj_dict (dict): Словарь параметров
@@ -627,7 +629,7 @@ class UniCores:
     def check_i_key(i_key, name, user_id):
         """
 
-            Функция проверки ключа идемпотентности
+            Функция проверки ключа идемпотентности.
 
             Args:
                 i_key (string): Строка ключа идемпотентности
@@ -658,8 +660,10 @@ class UniCores:
 
 
 class QueryFilter:
+    """Класс для фильтра."""
 
     def __init__(self, *args, **kwargs):
+        """Инит метод."""
         if 'tablename' in kwargs:
             self.tn = kwargs['tablename'] + "."
         else:
@@ -674,6 +678,7 @@ class QueryFilter:
                 self.all.extend(kwargs[s])
 
     def apply(self, query, f={}):
+        """Главный метод."""
 
         for key in f.keys():
 
@@ -806,13 +811,13 @@ Base = declarative_base()
 
 
 class OuterOperations(UniCores):
-    """Класс для работы с внешними операциями (это те операции, ответ которых мы хотим получить извне, например, от Django"""
+    """Класс для работы с внешними операциями (это те операции, ответ которых мы хотим получить извне, например, от Django."""
 
     @staticmethod
     def execute(path_args, el_id, result):
         """
 
-        Функция выполнения внешней операции
+        Функция выполнения внешней операции.
 
         Args:
             path_args (array): Массив настроек пути до исполняемого файла
@@ -850,7 +855,7 @@ class OuterOperations(UniCores):
     def create(func=None, obj_dict={}):
         """
 
-        Функция создания внешней операции и ее выполнение
+        Функция создания внешней операции и ее выполнение.
 
         Args:
             func (string): Название внешней операции, перечень доступных названий указан в config/
@@ -948,7 +953,7 @@ class OuterOperations(UniCores):
     def get_state(obj_dict):
         """
 
-        Функция получения сатуса внешней операции
+        Функция получения сатуса внешней операции.
 
         Args:
             obj_dict (dict): Словарь параметров для поиска (ID внешней операции для получения)
@@ -967,7 +972,7 @@ class OuterOperations(UniCores):
 
 
 class OuterCommand:
-    """Класс для манипуляций с командами для воркеров"""
+    """Класс для манипуляций с командами для воркеров."""
 
     cmd = ''
     __data_dict__ = {}
@@ -1062,7 +1067,7 @@ class GamesChangeState(OuterCommand):
 
 
 class OuterOpFactory:
-    """Фабрика внешних операций"""
+    """Фабрика внешних операций."""
 
     __list__ = (
         GamesChangeState,
@@ -1083,7 +1088,7 @@ class OuterOpFactory:
 
 
 class OuterOperation(UniCore, Base):
-    """Класс для манипуляций с внешними операциями"""
+    """Класс для манипуляций с внешними операциями."""
 
     __tablename__ = 'outer_operations'
     __table_args__ = {'schema': 'api'}
@@ -1117,7 +1122,7 @@ class OuterOperation(UniCore, Base):
 
 
 class IdempotentOperation(UniCore, Base):
-    """Класс для манипуляций с идемпотентными операциями"""
+    """Класс для манипуляций с идемпотентными операциями."""
 
     __tablename__ = 'idempotent_operations'
     __table_args__ = {'schema': 'api'}

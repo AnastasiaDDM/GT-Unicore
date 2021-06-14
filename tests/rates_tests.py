@@ -1,9 +1,12 @@
+"""Модуль для тестирования тарифов."""
 import unittest
 from sqlalchemy import func
 from app.core.rates.models import *
 
 
 class TestRates(unittest.TestCase):
+    """Класс для тестирования тарифов."""
+
     global session
     session = db.session()
 
@@ -210,5 +213,6 @@ class TestRates(unittest.TestCase):
 
     # Подходящий тариф WrongDataEx - переданы не все параметры
     def test_get_suitable_amount2_rate(self):
+        ''''''
         d = {"current_user_id": 1, "fl_count": 350}
         self.assertRaises(WrongDataEx, Rates.get_suitable_amount, d)

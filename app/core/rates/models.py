@@ -54,7 +54,7 @@ class Rates(UniCores):
 
     @staticmethod
     def get_methods():
-        __methods__ = {
+        return {
             "get": {"func": Rates.get},
             "add": {"func": Rates.add},
             "delete": {"func": Rates.delete},
@@ -62,7 +62,6 @@ class Rates(UniCores):
             "get_all": {"func": Rates.get_all},
             "get_suitable_amount": {"func": Rates.get_suitable_amount}
         }
-        return __methods__
 
     # Добавление
     @staticmethod

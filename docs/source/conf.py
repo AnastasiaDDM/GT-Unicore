@@ -1,3 +1,4 @@
+"""Модуль конфигов."""
 import os
 import sys
 

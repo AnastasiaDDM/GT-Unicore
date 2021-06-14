@@ -8,8 +8,16 @@ before_install:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+deploy:
+  provider: heroku
+  app: "gt-unicore"
+  api_key:
+    secure: "567f6d45-b282-4266-afef-7e61b9f0e01f"
 before_script:
   - psql -c 'CREATE DATABASE gt_tests WITH ENCODING = "UTF8";' -U postgres
-script: coverage run -m unittest tests/rates_tests.py
+script:
+  - coverage run -m unittest tests/rates_tests.py
+  - flake8 --ignore E501,F405,F403,E711,R504,D102,D202,D208 --filename=app/core/ra
+tes, app/core/models.py
 after_success:
   - codecov
