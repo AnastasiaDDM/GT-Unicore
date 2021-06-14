@@ -1,0 +1,15 @@
+ignore:
+  - "app/core/chats"  # ignore folders and all its contents
+  - "app/core/clients"
+  - "app/core/games"
+  - "app/core/notices"
+  - "app/core/payments"
+  - "app/core/profiles"
+  - "app/core/server"
+  - "app/core/staff"
+  - "app/core/models.py"
+  - "app/core/exceptions.py"
+  - "app/util"
+  - "app/docs"
+  - "docs"
+  - "log"

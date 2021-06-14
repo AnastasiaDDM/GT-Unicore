@@ -1,0 +1,59 @@
+{
+"logging":
+	{
+			"version": 1,
+			"formatters": {
+				"default": {
+					"format": "%(asctime)s  - %(name)s - %(levelname)s - %(message)s",
+					"datefmt": "%Y-%m-%d %H:%M:%S"
+					}
+			},
+			"handlers": {
+				"console": {
+					"level": "DEBUG",
+					"class": "logging.StreamHandler",
+					"formatter": "default",
+					"stream": "ext://sys.stdout"
+				},
+				"file": {
+					"level": "INFO",
+					"class": "logging.handlers.RotatingFileHandler",
+					"formatter": "default",
+					"filename": "log\\log.txt",
+					"maxBytes": 102400,
+					"backupCount": 10
+				}
+			},
+			"loggers": {
+				"": {
+					"level": "DEBUG",
+					"handlers": ["file"]
+				},
+				"cron": {
+					"level": "DEBUG",
+					"handlers": ["file", "console"]
+				},
+				"console": {
+					"level": "DEBUG",
+					"handlers": ["file", "console"]
+				},
+				"worker": {
+					"level": "INFO",
+					"handlers": ["file", "console"]
+				},
+				"db": {
+					"level": "INFO",
+					"handlers": ["file", "console"]
+				},
+				"server": {
+					"level": "INFO",
+					"handlers": ["file", "console"]
+				},
+				"api": {
+					"level": "INFO",
+					"handlers": ["file", "console"]
+				}
+			},
+			"disable_existing_loggers": "False"
+	}
+}

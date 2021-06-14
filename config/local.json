@@ -1,0 +1,32 @@
+{
+  "local":
+  {
+    "debug": 0,
+    "use_debugger": 0,
+    "secret_key":"",
+    "db":{
+      "conn_string":"postgresql://postgres:123456@localhost/gt_tests",
+      "params":
+      {
+        "echo":"True"
+      }
+    },
+
+    "temp_dir":"temp",
+
+    "external_commands": {
+      "profiles_prolong_rate": {"path": "C:\\Users\\79016\\Desktop\\test_thread.py", "type": "sync"},
+      "profiles_change_rate": {"path": "C:\\Users\\79016\\Desktop\\test_thread.py", "type": "async"},
+      "profiles_pay_rate": {"path": "C:\\Users\\79016\\Desktop\\test_thread.py", "type": "async"},
+      "games_calc_results": {"path": "C:\\Users\\79016\\Desktop\\test_thread.py", "type": "async"},
+      "games_send_to_scan": {"path": "C:\\Users\\79016\\Desktop\\test_thread.py", "type": "async"},
+      "games_make_task": {"path": "C:\\Users\\79016\\Desktop\\test_thread.py", "type": "async"},
+      "games_update_task": {"path": "C:\\Users\\79016\\Desktop\\test_thread.py", "type": "async"},
+      "games_change_state": {"path": "C:\\Users\\79016\\Desktop\\test_thread.py", "type": "async"},
+      "rates_get_suitable_amount": {"path": "C:\\Users\\79016\\Desktop\\test_thread.py", "type": "async"}
+    },
+
+    "token_ttl": 525960
+  }
+}
+

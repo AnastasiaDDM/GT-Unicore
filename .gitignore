@@ -1,0 +1,14 @@
+.idea*
+.gitattributes
+\!*
+\!*.*
+.coverage
+api.py
+log/
+*__pycache__*
+*.bat
+*__init__.py*
+config/flask.json
+tests1/*
+/docs/build/*
+!/docs/build/markdown/

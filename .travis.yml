@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.7"
+services:
+  - postgresql
+before_install:
+  - pip install codecov
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+before_script:
+  - psql -c 'CREATE DATABASE gt_tests WITH ENCODING = "UTF8";' -U postgres
+script: coverage run -m unittest tests/rates_tests.py
+after_success:
+  - codecov
