@@ -3,7 +3,6 @@
 \!*
 \!*.*
 .coverage
-api.py
 log/
 *__pycache__*
 *.bat
@@ -12,3 +11,4 @@ config/flask.json
 tests1/*
 /docs/build/*
 !/docs/build/markdown/
+mklink.txt

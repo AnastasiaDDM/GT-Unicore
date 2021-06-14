@@ -23,16 +23,16 @@ class TestRates(unittest.TestCase):
     def test_add1_rate(self):
         max_id = session.query(func.max(Rate.id)).scalar()
         if max_id is None:
-            max_id=0
+            max_id = 0
 
         expected1 = {
             'id': int(max_id) + 1,
-             'name': 'Расширенный1',
-             'slug': 'ext1',
-             'description': None,
-             'settings': {'grid': [{'max': 1000, 'min': 0, 'amount': {'RUB': 210, 'USD': 3}}]},
-             'date_del': None,
-             'date_out': None
+            'name': 'Расширенный1',
+            'slug': 'ext1',
+            'description': None,
+            'settings': {'grid': [{'max': 1000, 'min': 0, 'amount': {'RUB': 210, 'USD': 3}}]},
+            'date_del': None,
+            'date_out': None
         }
 
         d1 = {"current_user_id": 1, "name": "Расширенный1", "slug": "ext1", "settings": {"grid": [{"max": 1000, "min": 0, "amount": {"RUB": 210, "USD": 3}}]}}
@@ -65,12 +65,12 @@ class TestRates(unittest.TestCase):
 
         expected4 = {
             'id': int(max_id) + 1,
-             'name': 'Стандартный',
-             'slug': 'standart',
-             'description': 'стандартный тариф',
-             'settings': {'grid': [{"max": 500, "min": 0, "amount": {"RUB": 100, "USD": 3}}]},
-             'date_del': None,
-             'date_out': None
+            'name': 'Стандартный',
+            'slug': 'standart',
+            'description': 'стандартный тариф',
+            'settings': {'grid': [{"max": 500, "min": 0, "amount": {"RUB": 100, "USD": 3}}]},
+            'date_del': None,
+            'date_out': None
         }
 
         d4 = {"id": 1, "name": "Стандартный", "slug": "standart", "description": "стандартный тариф", "settings": {"grid": [{"max": 500, "min": 0, "amount": {"RUB": 100, "USD": 3}}]}}
@@ -85,16 +85,16 @@ class TestRates(unittest.TestCase):
 
         max_id = session.query(func.max(Rate.id)).scalar()
         if max_id is None:
-            max_id=0
+            max_id = 0
 
         expected5 = {
             'id': int(max_id) + 1,
-             'name': 'Расширенный5',
-             'slug': 'ext5',
-             'description': "описание 5",
-             'settings': {'grid': [{'max': 1000, 'min': 0, 'amount': {'RUB': 210, 'USD': 3}}]},
-             'date_del': None,
-             'date_out': None
+            'name': 'Расширенный5',
+            'slug': 'ext5',
+            'description': "описание 5",
+            'settings': {'grid': [{'max': 1000, 'min': 0, 'amount': {'RUB': 210, 'USD': 3}}]},
+            'date_del': None,
+            'date_out': None
         }
 
         d5 = {"current_user_id": 1, "name": "Расширенный5", "slug": "ext5", 'description': "описание 5", "settings": {"grid": [{"max": 1000, "min": 0, "amount": {"RUB": 210, "USD": 3}}]}}
@@ -161,10 +161,9 @@ class TestRates(unittest.TestCase):
     # Поиск
     def test_get_all1_rate(self):
 
-        expected1 = [{'id': 1, 'name': 'Расширенный1', 'slug': 'ext1', 'description': None, 'settings': {'grid': [{'max': 1000, 'min': 0,
- 'amount': {'RUB': 210, 'USD': 3}}]}}, {'id': 2, 'name': 'Стандартный', 'slug': 'standart', 'description': 'стандартный тариф', 'settings': {'grid': [{'max': 500, 'min': 0, 'amount': {'RUB': 100, 'USD': 3}}]}}]
+        expected1 = [{'id': 1, 'name': 'Расширенный1', 'slug': 'ext1', 'description': None, 'settings': {'grid': [{'max': 1000, 'min': 0, 'amount': {'RUB': 210, 'USD': 3}}]}}, {'id': 2, 'name': 'Стандартный', 'slug': 'standart', 'description': 'стандартный тариф', 'settings': {'grid': [{'max': 500, 'min': 0, 'amount': {'RUB': 100, 'USD': 3}}]}}]
 
-        p1 = Rates.get_all({'filter':{'id': [1, 2]}})
+        p1 = Rates.get_all({'filter': {'id': [1, 2]}})
         for key in p1:
             key.pop('date_add', None)
             key.pop('date_del', None)
@@ -174,10 +173,9 @@ class TestRates(unittest.TestCase):
 
     # Поиск
     def test_get_all2_rate(self):
-        expected2 = [{'id': 1, 'name': 'Расширенный1', 'slug': 'ext1', 'description': None,
-          'settings': {'grid': [{'max': 1000, 'min': 0, 'amount': {'RUB': 210, 'USD': 3}}]}}]
+        expected2 = [{'id': 1, 'name': 'Расширенный1', 'slug': 'ext1', 'description': None, 'settings': {'grid': [{'max': 1000, 'min': 0, 'amount': {'RUB': 210, 'USD': 3}}]}}]
 
-        p2 = Rates.get_all({'filter':{'id': [1, 2], 'slug':['ext']}})
+        p2 = Rates.get_all({'filter': {'id': [1, 2], 'slug': ['ext']}})
         for key in p2:
             key.pop('date_add', None)
             key.pop('date_del', None)

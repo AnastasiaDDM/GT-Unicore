@@ -1,20 +1,14 @@
-from sqlalchemy import Column, Integer, Text, VARCHAR, TIMESTAMP, Numeric, Boolean, JSON
+from sqlalchemy import Column, Integer, VARCHAR, TIMESTAMP, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from app.util.util import parse_datetime_tz
-from sqlalchemy import text, or_, DECIMAL
+from sqlalchemy import text, or_
 from app.util.db import db
 from app.core.exceptions import *
-# import datetime
 from datetime import datetime
 from decimal import Decimal
 from app.util import check
 from app.util import config, log
-import pytz
-import app
 import hashlib
-import base64
-from random import choice
-from string import ascii_letters
 from app.util.util import tz_utcnow
 import threading
 import subprocess
@@ -41,13 +35,13 @@ class UniCore:
 
         try:
 
-            for attr in obj_dict.keys(): # Проверяем на типы и лишние поля
-                if not attr in self.__fields_dict__:
+            for attr in obj_dict.keys():  # Проверяем на типы и лишние поля
+                if attr not in self.__fields_dict__:
                     return False
                 if type(obj_dict[attr]) != self.__fields_dict__[attr]['type']:
                     return False
 
-            for attr in self.__fields_dict__.keys(): # Проверяем на обязательные поля
+            for attr in self.__fields_dict__.keys():  # Проверяем на обязательные поля
                 if "nullable" in self.__fields_dict__[attr] and not self.__fields_dict__[attr]['nullable']:
                     if attr not in obj_dict:
                         return False
@@ -233,7 +227,7 @@ class UniCores:
 
                 if obj_non_repeat.first():
                     flag_success = False
-            except:
+            except Exception:
                 pass
 
             if flag_success:
@@ -606,7 +600,7 @@ class UniCores:
             name_field_id = obj_class().__name_field_id__
             if name_field_id in obj_dict:
                 id = obj_dict[name_field_id]
-        except:
+        except Exception:
             id = obj_dict.get('id', None)
         return id
 
@@ -679,26 +673,26 @@ class QueryFilter:
                 self.fields[s] = kwargs[s]
                 self.all.extend(kwargs[s])
 
-    def apply(self, query,  f = {}):
+    def apply(self, query, f={}):
 
         for key in f.keys():
 
-            if key in self.fields['set_int']: # Множество точное целых чисел
+            if key in self.fields['set_int']:  # Множество точное целых чисел
                 if type(f[key]) == list and len(f[key]) > 0:
                     array = list(filter(lambda x: type(x) == int, f[key]))
                     if len(array) > 0:
-                        query = query.filter(text(self.tn + key + " in (" + ",".join(list(map(str, array))) + ")")) # Например, id in :id_array -> # https://docs.sqlalchemy.org/en/13/orm/tutorial.html#using-textual-sql
+                        query = query.filter(text(self.tn + key + " in (" + ",".join(list(map(str, array))) + ")"))  # Например, id in :id_array -> # https://docs.sqlalchemy.org/en/13/orm/tutorial.html#using-textual-sql
 
-            if key in self.fields['set_text']: # Множество точное строк
+            if key in self.fields['set_text']:  # Множество точное строк
                 if type(f[key]) == list and len(f[key]) > 0:
                     array = list(filter(lambda x: type(x) == str and len(x) > 0, f[key]))
                     if len(array) > 0:
 
                         # здесь нужно найти метод у фрейма. который сам ставит ковычки, дабы защитить себя от инъекций
-                        array = list(map(lambda x: "'"+ x + "'", array))
-                        query = query.filter(text(self.tn + key + " in (" + ",".join(array) + ")")) # Например, id in :id_array -> # https://docs.sqlalchemy.org/en/13/orm/tutorial.html#using-textual-sql
+                        array = list(map(lambda x: "'" + x + "'", array))
+                        query = query.filter(text(self.tn + key + " in (" + ",".join(array) + ")"))  # Например, id in :id_array -> # https://docs.sqlalchemy.org/en/13/orm/tutorial.html#using-textual-sql
 
-            if key in self.fields['set_like']: # Множество текстов с поиском фрагментов
+            if key in self.fields['set_like']:  # Множество текстов с поиском фрагментов
                 if type(f[key]) == list and len(f[key]) > 0:
                     fragments = []
                     params = {}
@@ -715,16 +709,16 @@ class QueryFilter:
                 if type(f[key]) == list and len(f[key]) > 0:
                     if f[key][0] is not None:
                         try:
-                            value = float(f[key][0]) # Попытаемся преобразовать строку к числу
+                            value = float(f[key][0])  # Попытаемся преобразовать строку к числу
                             query = query.filter(text(self.tn + key + " >= " + str(value)))
-                        except:
+                        except Exception:
                             pass
 
                     if len(f[key]) > 1 and f[key][1] is not None:
                         try:
                             value = float(f[key][1])
-                            query = query.filter(text(self.tn  + key + " <= " + str(value)))
-                        except:
+                            query = query.filter(text(self.tn + key + " <= " + str(value)))
+                        except Exception:
                             pass
 
             if key in self.fields['range_date']:  # Диапазон дат
@@ -733,21 +727,21 @@ class QueryFilter:
                     if f[key][0] is not None:
                         try:
 
-                            value = parse_datetime_tz(f[key][0]) # Попытаемся преобразовать строку к дате
-                            query = query.filter(text(self.tn  + key + " >= :" + undotted_key + "_value_gt" ))
+                            value = parse_datetime_tz(f[key][0])  # Попытаемся преобразовать строку к дате
+                            query = query.filter(text(self.tn + key + " >= :" + undotted_key + "_value_gt"))
                             query = query.params(**{undotted_key + "_value_gt": str(value)})
-                        except Exception as error:
+                        except Exception:
                             pass
 
                     if len(f[key]) > 1 and f[key][1] is not None:
                         try:
                             value = parse_datetime_tz(f[key][1])
-                            query = query.filter(text(self.tn + key + " <= :" + undotted_key + "_value_lt" ))
+                            query = query.filter(text(self.tn + key + " <= :" + undotted_key + "_value_lt"))
                             query = query.params(**{undotted_key + "_value_lt": str(value)})
-                        except:
+                        except Exception:
                             pass
 
-            if key in self.fields['exist']: # Булевое присутствие
+            if key in self.fields['exist']:  # Булевое присутствие
                 if type(f[key]) == bool:
                     new_key = key
                     if key == 'deleted':
@@ -763,17 +757,12 @@ class QueryFilter:
                         # Нужно показать только существующие (где поле Null)
                         query = query.filter(text(new_key + " is null"))
 
-            if key in self.fields['bool']: # Булевы
+            if key in self.fields['bool']:  # Булевы
                 if type(f[key]) == bool:
                     undotted_key = key.replace('.', '_')
                     query = query.filter(text(key + " is :" + undotted_key + "_value"))
                     # query = query.params(**{undotted_key + "_value" : str(f[key])})
                     query = query.params(**{undotted_key + "_value": bool(f[key])})
-
-
-
-
-
 
         if "sort_by" not in f and "id" in self.all:
             f['sort_by'] = "id"
@@ -784,15 +773,15 @@ class QueryFilter:
             else:
                 query = query.order_by(text(self.tn + f['sort_by']))
 
-        try: # Вдруг не будет переводиться в числа
+        try:  # Вдруг не будет переводиться в числа
             if "count" in f:
                 page = 1
                 count = int(f['count'])
                 if "page" in f:
                     page = int(f['page'])
-                offset = (page-1) * count
+                offset = (page - 1) * count
                 query = query.limit(count).offset(offset)
-        except:
+        except Exception:
             pass
 
         return query
@@ -846,10 +835,10 @@ class OuterOperations(UniCores):
             # Успешное выполнение
             if answ[0] == '0':
                 UniCores.update({'id': int(el_id), 'date_complete': tz_utcnow(), 'result': {'result': answ}}, OuterOperation, OuterOperationsUpdateEx)
-                result['result']=True
+                result['result'] = True
             # Ошибка выполнения
             else:
-                UniCores.update({'id': int(el_id), 'date_fault': tz_utcnow(), 'result': {'result':answ}, 'cause_fault': str(answ[1].replace('\r\n', ''))}, OuterOperation, OuterOperationsUpdateEx)
+                UniCores.update({'id': int(el_id), 'date_fault': tz_utcnow(), 'result': {'result': answ}, 'cause_fault': str(answ[1].replace('\r\n', ''))}, OuterOperation, OuterOperationsUpdateEx)
         except Exception as error:
             lg.warning(
                 str(type(error)) + "::" + str(OuterOperation) + "::" + str(
@@ -892,7 +881,7 @@ class OuterOperations(UniCores):
                         # Составляем хэш для проверки внешней операции
                         new_obj_dict = dict(sorted(obj_dict.items()))
                         str_obj_dict = str(new_obj_dict).replace(' ', '')
-                        str_obj_dict = str(func)+str_obj_dict
+                        str_obj_dict = str(func) + str_obj_dict
                         hash_object = hashlib.md5(str_obj_dict.encode())
 
                         # Проверка внешней операции
@@ -944,7 +933,7 @@ class OuterOperations(UniCores):
                             OuterOperations.execute(path_args, el.id, result)
                         lg.info(str(class_mode) + "::" + str(el.id) + "::Запущена внешняя операция")
                         return result
-            raise WrongDataEx('func: '+str(func)+', obj_dict: '+str(obj_dict))
+            raise WrongDataEx('func: ' + str(func) + ', obj_dict: ' + str(obj_dict))
         except Exception as error:
             if el:
                 lg.warning(
@@ -991,25 +980,25 @@ class OuterCommand:
         return self.__data_dict__
 
     # Проверка типов переданных полей и полей данных
-    def check_data(self, data_dict = None):
+    def check_data(self, data_dict=None):
 
-        if not self.__data_has__ and data_dict is not None: # Данные передавать нельзя
+        if not self.__data_has__ and data_dict is not None:  # Данные передавать нельзя
             return False
 
-        if self.__data_required__ and (data_dict is None or type(data_dict) != dict or len(data_dict.keys()) == 0): # Ничего не передали, а данные нужны
+        if self.__data_required__ and (data_dict is None or type(data_dict) != dict or len(data_dict.keys()) == 0):  # Ничего не передали, а данные нужны
             return False
 
-        if not self.__data_check__: # Проверка не нужна
+        if not self.__data_check__:  # Проверка не нужна
             return True
 
         try:
-            for attr in data_dict.keys(): # Проверяем на типы и лишние поля
-                if not attr in self.__data_dict__:
+            for attr in data_dict.keys():  # Проверяем на типы и лишние поля
+                if attr not in self.__data_dict__:
                     return False
                 if type(data_dict[attr]) != self.__data_dict__[attr]['type']:
                     return False
 
-            for attr in self.__data_dict__.keys(): # Проверяем на обязательные поля
+            for attr in self.__data_dict__.keys():  # Проверяем на обязательные поля
                 if "nullable" in self.__data_dict__[attr] and not self.__data_dict__[attr]['nullable']:
                     if attr not in data_dict:
                         return False
@@ -1090,7 +1079,7 @@ class OuterOpFactory:
 
     @staticmethod
     def get_list_commands() -> dict:
-        return {l.cmd: l for l in OuterOpFactory.__list__}
+        return {el.cmd: el for el in OuterOpFactory.__list__}
 
 
 class OuterOperation(UniCore, Base):
@@ -1150,4 +1139,3 @@ class IdempotentOperation(UniCore, Base):
     hash = Column(VARCHAR(100))
     date_add = Column(TIMESTAMP(timezone=True), nullable=False, default=tz_utcnow)
     date_complete = Column(TIMESTAMP(timezone=True))
-

@@ -1,7 +1,7 @@
 import json
 import os
 
-__config={}
+__config = {}
 
 
 def read_config():
@@ -18,7 +18,7 @@ def read_config():
         raise RuntimeError(error)
 
 
-def get_config(name = None):
+def get_config(name=None):
     global __config
     if not len(__config.keys()):
         read_config()
@@ -39,4 +39,3 @@ def set_config(name, data):
         return False
     __config[name] = data
     return True
-

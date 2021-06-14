@@ -69,7 +69,6 @@ class WrongDataEx(CoreEx):
         self.message = message
 
 
-
 class OuterOperationsAddEx(CoreEx):
 
     def __init__(self, message):
@@ -278,6 +277,7 @@ class GamesUpdateEx(CoreEx):
     def __init__(self, message):
         self.message = "Ошибка изменения игры: " + message
 
+
 class GamesCopyEx(CoreEx):
 
     def __init__(self, message):
@@ -330,7 +330,6 @@ class ProfilesSendToScanEx(CoreEx):
 
     def __init__(self, message):
         self.message = "Ошибка отправки профиля на сканирование: " + message
-
 
 
 # # # # # # # # # # Chat # # # # # # # # # # #

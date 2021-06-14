@@ -1,6 +1,7 @@
 from datetime import datetime
 import pytz
-import random, string
+import random
+import string
 
 
 def random_string(length=15):
@@ -19,11 +20,11 @@ def parse_datetime_db(str):
 def parse_datetime_tz(str):
     try:
         return datetime.strptime(str, "%Y-%m-%d %H:%M:%S%z")
-    except:
+    except Exception:
         pass
     try:
         return datetime.strptime(str, "%d.%m.%Y %H:%M:%S%z")
-    except:
+    except Exception:
         pass
     raise ValueError('Wrong date: %s' % str)
 

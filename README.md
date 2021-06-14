@@ -1,6 +1,6 @@
-[![Documentation Status](https://readthedocs.org/projects/gt-tests/badge/?version=latest)](https://gt-tests.readthedocs.io/ru/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/gt-unicore/badge/?version=latest)](https://gt-unicore.readthedocs.io/ru/latest/?badge=latest)
 
-[![codecov](https://codecov.io/gh/AnastasiaDDM/GT-Tests/branch/main/graph/badge.svg?token=IIIOEBVHSB)](https://codecov.io/gh/AnastasiaDDM/GT-Tests)
+[![codecov](https://codecov.io/gh/AnastasiaDDM/GT-Unicore/branch/main/graph/badge.svg?token=3NQV48X5K2)](https://codecov.io/gh/AnastasiaDDM/GT-Unicore)
 
 # Документация на UniCore и UniCores
 

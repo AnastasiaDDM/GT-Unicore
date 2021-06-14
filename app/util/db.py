@@ -12,15 +12,15 @@ class db:
 
     @staticmethod
     def get():
-        if db.__count_i==0:
+        if db.__count_i == 0:
             db.__connect()
-        return db.__instances[db.__count_i-1]
+        return db.__instances[db.__count_i - 1]
 
     @staticmethod
     def session():
         if db.__count_s == 0:
             db.__count_s += 1
-            session=sessionmaker(bind=db.get())
+            session = sessionmaker(bind=db.get())
             db.__sessions.append(session())
         return db.__sessions[db.__count_s - 1]
 
@@ -40,18 +40,18 @@ class db:
                 raise RuntimeError("No DB Config: " + str(error))
         if not len(db.__conf.keys()):
             raise RuntimeError("No DB Config!")
-        return  db.__conf
+        return db.__conf
 
     @staticmethod
     def __connect():
         conf = db.__get_config()
-        db.__count_i+=1
+        db.__count_i += 1
         try:
             db.__instances.append(create_engine(conf['conn_string']))
-            return db.__instances[db.__count_i-1]
+            return db.__instances[db.__count_i - 1]
         except Exception as error:
-            l = log.getlogger("db")
-            l.critical("Database connect error: " + str(error))
+            lg = log.getlogger("db")
+            lg.critical("Database connect error: " + str(error))
             raise RuntimeError("Database connect error: " + str(error))
 
     @staticmethod

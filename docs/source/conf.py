@@ -3,11 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../..'))
 # sys.path.insert(0, os.path.abspath('C:/Users/79016/GT/api/'))
-extensions = [
-'sphinx.ext.autodoc',
-'sphinx_markdown_builder']
-
-
+extensions = ['sphinx.ext.autodoc', 'sphinx_markdown_builder']
 project = 'GT-Test'
 copyright = '2021'
 author = 'AnastasiaDDM'

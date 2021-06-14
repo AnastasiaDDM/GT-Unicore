@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, Text, TIMESTAMP, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from app.core.models import *
 from app.util import log
-import pytz
 from app.util.util import tz_utcnow
 
 Base = declarative_base()
@@ -27,7 +26,6 @@ class Rate(UniCore, Base):
         'date_del': {"type": datetime},
         'date_out': {"type": datetime},
     }
-
 
     # Описание полей объекта
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -167,4 +165,3 @@ class Rates(UniCores):
         """
 
         return OuterOperations.create("rates_get_suitable_amount", obj_dict)
-
