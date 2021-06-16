@@ -21,11 +21,10 @@ try:
 except BaseException as error:
     print("No port for Redis or token_ttl Config, using the default config")
 
-# Создание нереляционной бд Redis
-r = redis.Redis(port=port)
-
 # Проверка подключения
 try:
+    # Создание нереляционной бд Redis
+    r = redis.Redis(port=port)
     r.ping()
     redis_ready = True
 except:
@@ -144,4 +143,4 @@ def handler(name_entity=None, name_func=None):
 
 
 if __name__ == '__main__':
-      app.run(host='127.0.0.1', port=5000)
+      app.run(host='0.0.0.0', port=int(os.environ['PORT']))

@@ -10,10 +10,10 @@ install:
   - pip install -r requirements.txt
 deploy:
   provider: heroku
-  app:
-    main: "gt-unicore"
   api_key:
     secure: "567f6d45-b282-4266-afef-7e61b9f0e01f"
+  app:
+    main: "gt-unicore"
 before_script:
   - psql -c 'CREATE DATABASE gt_tests WITH ENCODING = "UTF8";' -U postgres
 script:
