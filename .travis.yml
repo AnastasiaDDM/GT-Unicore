@@ -1,22 +1,23 @@
 language: python
 python:
-  - "3.7"
+- '3.7'
 services:
-  - postgresql
+- postgresql
 before_install:
-  - pip install codecov
-# command to install dependencies
+- pip install codecov
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
 deploy:
   provider: heroku
-  api_key: $HEROKU_API_KEY
+  api_key:
+    secure: dkREJX1bZITxg0d6Dw5UhZP2ISjItTVraKosJF5sz3ZP07IY/cvDV89r963FO8qk2l8Pc8LMlMSZN4Mdct1RDdeUORlEqhy4YA71maJQXJqstBqR1pr9o26pGNrgZCNppEcqjCkilPIyjz/tCbf3p4Rd7fPhdgnxG2J8GL/e8AQERrzb2Z79NkqkIou/n80knlIGa7pTAHnNvPGy+kOcCZhXQHV4teBa0CXDPtngSOgkkvAUKlWBBgZrH7KAO2sDMKOPreUGNf26JiPvGfXZS+APMyInnbDuPzaO5hrZF6twXo+cZsch8fXadJS+//0gpSempZq8XFnHmD+moP8F9qeAH9ZpsjYPRH0VkSL6KA14mGDj21Z++T9oCazFvg+fDJykMs3WMt7uBo1veUvLMdBFfL+A39ajU6pwreDI5lPyVDnvanq5YuQB8xQyI/7WZgFntkjqBw8ysa5yKZVtyClJJpcHxRzjStAPlbuwNxeF+WD3Z/ptSEN+mKz8M2Yh2Mvw7lxZogzhBBGAH3IgVGIi/XIdR/aLohGkcSLlnEJUN02VOWfzRk1TrvL6mkD94mkYg9ylTulLzmZ25MQ0ov8cUC2QeS8E+AazSkybU4vtL4ExF8Lp6YCI/tsyvEMXMy04tPrC5UFhU1wNV8iuChB4tZddLkMm78QHzf1+HHI=
   app:
-    main: "gt-unicore"
+    main: gt-unicore
 before_script:
-  - psql -c 'CREATE DATABASE gt_tests WITH ENCODING = "UTF8";' -U postgres
+- psql -c 'CREATE DATABASE gt_tests WITH ENCODING = "UTF8";' -U postgres
 script:
-  - coverage run -m unittest tests/rates_tests.py
-  - flake8 --ignore E501,F405,F403,E711,R504,D102,D202,D208 --filename=app/core/rates, app/core/models.py
+- coverage run -m unittest tests/rates_tests.py
+- flake8 --ignore E501,F405,F403,E711,R504,D102,D202,D208 --filename=app/core/rates,
+  app/core/models.py
 after_success:
-  - codecov
+- codecov
