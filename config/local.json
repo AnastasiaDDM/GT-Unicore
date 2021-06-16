@@ -5,7 +5,7 @@
     "use_debugger": 0,
     "secret_key":"",
     "db":{
-      "conn_string":"postgresql://postgres:123456@localhost/gt_tests",
+      "conn_string":"postgres://ebugwagmbyywcy:d0c89e9bea4a6c1a8b05b48c82b303fbe3911f578461a6b6bebffa5f3d00c187@ec2-63-34-97-163.eu-west-1.compute.amazonaws.com:5432/db8gvrkv65upt8",
       "params":
       {
         "echo":"True"
