@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.util import config, log
-
+import os
 
 class db:
     __instances = []
@@ -46,20 +46,15 @@ class db:
     def __connect():
         conf = db.__get_config()
         db.__count_i += 1
-        # try:
+
         try:
-            db.__instances.append(create_engine(conf['conn_string']))
+            con = os.environ.get('conn_string', conf['conn_string'])
+            db.__instances.append(create_engine(con))
             return db.__instances[db.__count_i - 1]
-        except:
-            try:
-                db.__instances.append(create_engine(conf['conn_string_ex']))
-                return db.__instances[db.__count_i - 1]
-            # except:
-            #     pass
-            except Exception as error:
-                lg = log.getlogger("db")
-                lg.critical("Database connect error: " + str(error))
-                raise RuntimeError("Database connect error: " + str(error))
+        except Exception as error:
+            lg = log.getlogger("db")
+            lg.critical("Database connect error: " + str(error))
+            raise RuntimeError("Database connect error: " + str(error))
 
     @staticmethod
     def commit():
