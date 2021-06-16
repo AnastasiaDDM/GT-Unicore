@@ -12,6 +12,8 @@ deploy:
   api_key:
     secure: xw+yoNBusc1+RzVN4R5YHdHtsO0z6BJdGxKS/NTSU9hp7+1Weo6n6o+PwmQ+zTTNP2c36eL7UIV1LswoChCIuEYrZJZOAkUGnan2YIYiW+1ix1TnLwbc34mHzufDLUJ808ZB8nQ0brhuhh6X5kjRFMTsEv7lfCXkzQiS+05bV37358uBRjis/xxfiNw4EUvZP0UXpNOsCyI97ML21IeIJFzKDbcrsc4KRa9Po04Jf+M98h64oitUkBP9wplb3ONf5WY536tfRTY9WBqCN6SQIMQyXV7iGhKfYaojFtWgfMJH5Ffa7APFnFFzjm3JRg3itjxTKuboI8noJN3+lqJvc9KcX4gU34AOTUmwL2NWVBKCsaDZWvTAHFLBor/oBRmwAt990qlNuqbLEjDc2WoYKnO+i+VaVd5YDk0+nFl1Riyz+4CspssEcLMcfCpU+7ou7leCiIeKSqlr2sqV7dDBtTSY7ejoh0oV7txlmpKDWNYIECwz+9U14x00nTCCHq2S+7mN3486xf5oMNhJXJ8Xnjjg5HU/agkF02DuOujaGsUxSoeZSl5/uH//X0BpNOortm/CwsxeA7shp7TVy1aVd5tq5P309eHwQEYvcDRC6nklTt67/+KaVjcydbnctv9WMaDMlSWpWZDl1zmXR6RpG/GKsulRvQ+0FrNsdbyqcew=
   app: gt-unicore
+  on:
+    branch: main
 before_script:
 - psql -c 'CREATE DATABASE gt_tests WITH ENCODING = "UTF8";' -U postgres
 script:
