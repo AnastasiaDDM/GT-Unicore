@@ -3,6 +3,7 @@ import redis
 from flask import Flask, request, Response, make_response
 from app.core.rates.models import *
 from app.util.db import config
+import os
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
