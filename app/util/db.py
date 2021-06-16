@@ -51,8 +51,11 @@ class db:
                 db.__instances.append(create_engine(conf['conn_string']))
                 return db.__instances[db.__count_i - 1]
             except:
-                db.__instances.append(create_engine(conf['conn_string_ex']))
-                return db.__instances[db.__count_i - 1]
+                try:
+                    db.__instances.append(create_engine(conf['conn_string_ex']))
+                    return db.__instances[db.__count_i - 1]
+                except:
+                    pass
         except Exception as error:
             lg = log.getlogger("db")
             lg.critical("Database connect error: " + str(error))
