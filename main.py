@@ -100,7 +100,7 @@ def preprocess_request():
 @app.route('/')
 @app.route('/<path:dummy>')
 def index(dummy=None):
-    return "Тестирование происходит посредством Postman."
+    return "Тестирование происходит посредством Postman, доступны только функции тарифов."
 
 # Главная входная функция
 @app.route('/api/<name_entity>/<name_func>', methods=['GET', 'POST'])
