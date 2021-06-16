@@ -96,10 +96,10 @@ def preprocess_request():
 
 
 # Главная страница
-# @app.route('/')
-# @app.route('/<path:dummy>')
-# def index(dummy=None):
-#     return render_template('index.html')
+@app.route('/')
+@app.route('/<path:dummy>')
+def index(dummy=None):
+    return "Тестирование происходит посредством Postman."
 
 # Главная входная функция
 @app.route('/api/<name_entity>/<name_func>', methods=['GET', 'POST'])
